@@ -1,0 +1,52 @@
+1) Need a default loading overlay when pushing  - done
+2) error message on register - done
+1)check how to do a header - done
+2)Login page, Logout, cont to do API - done
+3) save jwt in localstorage - done
+4) render header base on auth token - done
+3) redo register page - use username,password, on the same form - done
+4) redirect to mainpage when user login - done
+5) redirecting loading for 3 seconds done
+6) style redirecting for loading position to top - done
+5) register function left error handling, protect RegisterError to makesure that it is from EmailActivatoion Page, else find a way to pass props via body - done 
+4) full name validiation do on frontend and backend - done just do backend
+3) media queries for the-header - done
+4) add category - need to research on nested router link for column = 9 use nested router link to toggle, should be adminDashboard/AddCategory adminDashboard/EditCategory - done
+4) add category finished with backend, do frontend using drop down list, need to protect add category page to only allow admin in front and backend, for backend see how WINS is done
+5) backend jwt add role for register and login - done 
+6) front end done for App.vue trylogin -done
+7) do for the rest of the frontend protected page, admin dashboard and its child - done
+8) do backend error hanlder - only done emailRegistration API, need to do for the rest. after that test on frontend - done
+6) loginByEmail backend need to return role/page to route to need to check if it was normal or admin-done
+7) update db with admin flag and also protect admin page with routeguard -done
+8) create page not exists for unauth page - done
+3) run back on container -done
+4) thing of how to handle on page load login may need to follow the main project to store token expiry time - done, component will load asynchronously so we use a data property to only render if this.tryLogin() was executed
+5) side bar below 500 width need to use hamburger menu - done push down nv use hamburger use media queries to push down
+6) view product - done
+5) edit category and delete category - left backend -done
+6) delete show success and failure - done
+5) backend for getCategory, need to get single Category and put in  modal dialog - done
+6) update modal - need to see vuetify - done
+7) update show success and failure - done
+7) push to git first
+6) protect category page need to see company source code.
+7) catch all route for backends both auth and product
+7) authentication need to check when login token was expired or not need to call to backend
+4)refactor error handler in backend for product
+6) clean up code
+7)setup docker-compose
+6) frontend need to protect route, need to call userAuthCheck and adminAuthCheck
+7) forget password
+8) add to cart features
+5) logout need to call backend, try to implement session based also
+3)check on how to save logins securely
+4) user dashboard for purchased item status like delivery/cancelled/delivered
+4)forget password
+5)How to store in HTTP only cookie
+6)Error handling frontend, probably use a modal/overlay
+7) TheHeader.vue to be reactive to small screen
+3) add linter
+
+maybe can have a shared repository
+
