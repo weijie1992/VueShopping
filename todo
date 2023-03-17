@@ -29,13 +29,26 @@
 5) backend for getCategory, need to get single Category and put in  modal dialog - done
 6) update modal - need to see vuetify - done
 7) update show success and failure - done
-7) push to git first
-6) protect category page need to see company source code.
+7) push to git first -done
+8) product feature - done with backend except update.-done
+9) continue on frontend for categories combobox need to see how to use v-model to send the id. also need to wired up shipping provider backend and model first -done
+10) complete addproduct page, need to see factory error and all api error handling for frontend, mounted error done, continue to submit from fronend and handle the error of submit - done
+9) refactor category backend code to return {sucess:true,results} - done
+10)complete edit product page - left with edit, delete done
+11) edit- combobox need to fetch the entire list not just objectid-done
+12) edit backend product-repository need to map all updated fields to so that we can edit - done
+12) edit error handler-done
+12) refactor editproduct and editCategory frontend code alot can be reuse start from mounted
+11) editProduct and editCategory have same css checkout how to handle it how to reuse the saem css in css file
+12) think of how to use redis, like loading of products can store in redis, during update/delete of product will refresh redis, else just use redis, check the response time also, try to wireup redis
+11) can refactor code to remove _inputState for each userinput
+6) protect category page need to see company source code. can also research on youtube/google
 7) catch all route for backends both auth and product
 7) authentication need to check when login token was expired or not need to call to backend
 4)refactor error handler in backend for product
 6) clean up code
 7)setup docker-compose
+9)check mongodb searching of product name and description should we use index, whats the pros and cons of indexing
 6) frontend need to protect route, need to call userAuthCheck and adminAuthCheck
 7) forget password
 8) add to cart features
@@ -47,6 +60,9 @@
 6)Error handling frontend, probably use a modal/overlay
 7) TheHeader.vue to be reactive to small screen
 3) add linter
+5) refactor code to use event driven architecture, can rewatch code with jay video, can reference from some notes in Onenote which is the answer of chatgpt
+4) need to know how to log events, may have to look at company source code for spunk it uses some types of id or session id. Or maybe need to understand event sourcing, CQRS
+5) add error logging for backend and frontend,
 
 maybe can have a shared repository
 
