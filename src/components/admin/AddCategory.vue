@@ -9,7 +9,7 @@
         <v-text-field
           label="Category"
           variant="underlined"
-          v-model="formData.category.value"
+          v-model.trim="formData.category.value"
         ></v-text-field
       ></v-container>
       <v-divider></v-divider>
@@ -29,10 +29,10 @@ export default {
   data() {
     return {
       formData: {
-        successMessage: null,
-        errorMessage: null,
+        successMessage: '',
+        errorMessage: '',
         category: {
-          value: null,
+          value: '',
           _inputState: {
             ...factories.createInputState('category'),
           },

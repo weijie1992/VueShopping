@@ -6,7 +6,7 @@
           errorMessage
         }}</v-alert>
         <v-text-field
-          v-model="formData.email.value"
+          v-model.trim="formData.email.value"
           type="email"
           label="Email"
           variant="underlined"
@@ -50,15 +50,15 @@ export default {
   data() {
     return {
       formData: {
-        errorMessage: null,
+        errorMessage: '',
         email: {
-          value: null,
+          value: '',
           _inputState: {
             ...factories.createInputState('email'),
           },
         },
         password: {
-          value: null,
+          value: '',
           _inputState: {
             ...factories.createInputState('password'),
           },

@@ -24,7 +24,7 @@ export default {
     return {
       displayLoadingOverlay: false,
       displayRegistrationError: false,
-      errorMessage: null,
+      errorMessage: '',
     }
   },
   computed: {

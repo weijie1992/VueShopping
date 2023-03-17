@@ -6,8 +6,8 @@
     <v-alert type="error" v-if="!!deleteActions.errorMessage">{{
       deleteActions.errorMessage
     }}</v-alert>
-    <v-alert type="error" v-if="!!gettingCategory.errorMessage">{{
-      gettingCategory.errorMessage
+    <v-alert type="error" v-if="!!selectedCategory.errorMessage">{{
+      selectedCategory.errorMessage
     }}</v-alert>
     <v-alert type="success" v-if="!!editActions.successMessage">{{
       editActions.successMessage
@@ -15,51 +15,20 @@
     <v-alert type="error" v-if="!!editActions.errorMessage">{{
       editActions.errorMessage
     }}</v-alert>
+
     <v-text-field
-      v-model="search"
+      v-model.trim="search"
       prepend-inner-icon="mdi-magnify"
       label="Search"
       single-line
       clearable
     ></v-text-field>
 
-    <div class="text-center">
-      <v-dialog v-model="gettingCategory.showDialog" width="500">
-        <v-card>
-          <v-card-title class="text-h5 grey lighten-2">
-            Update {{ gettingCategory.defaultValue }}
-          </v-card-title>
-
-          <v-card-text>
-            <v-text-field
-              v-model="gettingCategory.value"
-              single-line
-            ></v-text-field>
-          </v-card-text>
-
-          <v-divider></v-divider>
-
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn
-              color="primary"
-              text
-              @click="
-                updateCategory(
-                  gettingCategory._id,
-                  gettingCategory.value,
-                  gettingCategory.defaultValue
-                )
-              "
-            >
-              Update
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
-    </div>
-
-    <v-list dense>
+    <EditCategoryDialog
+      :selectedCategory="selectedCategory"
+      :updateCategory="updateCategory"
+    />
+    <v-list>
       <v-list-item
         v-for="category in filterCategories"
         :key="category.title"
@@ -74,32 +43,31 @@
     </v-list>
   </v-container>
 </template>
+
 <script>
 import productApi from '../../api/product-api'
 import commonMixins from '../../mixins/common'
+import actionsMixins from '../../mixins/actionsMixins'
 import errorHelper from '../../helpers/error-helper'
 import constants from '../../constants/constants'
-import factories from '../../factories/inputState'
 import { mapActions } from 'vuex'
+import EditCategoryDialog from './EditCategoryDialog.vue'
 export default {
+  components: {
+    EditCategoryDialog,
+  },
   data() {
     return {
       categories: {
         value: [],
-        errorMessage: null,
+        errorMessage: '',
       },
-      deleteActions: {
-        ...factories.createDefaultActions(),
-      },
-      gettingCategory: {
-        _id: null,
-        defaultValue: null,
-        value: null,
+      selectedCategory: {
+        _id: '',
+        defaultValue: '',
+        value: '',
         showDialog: false,
-        errorMessage: null,
-      },
-      editActions: {
-        ...factories.createDefaultActions(),
+        errorMessage: '',
       },
       search: '',
     }
@@ -111,33 +79,7 @@ export default {
       })
     },
   },
-  watch: {
-    'deleteActions.successMessage'() {
-      clearTimeout(this.deleteActions.successTimeout)
-      this.deleteActions.successTimeout = setTimeout(() => {
-        this.deleteActions.successMessage = null
-      }, 2000)
-    },
-    'deleteActions.errorMessage'() {
-      clearTimeout(this.deleteActions.errorTimeout)
-      this.deleteActions.errorTimeout = setTimeout(() => {
-        this.deleteActions.errorMessage = null
-      }, 5000)
-    },
-    'editActions.successMessage'() {
-      clearTimeout(this.editActions.successTimeout)
-      this.editActions.successTimeout = setTimeout(() => {
-        this.editActions.successMessage = null
-      }, 2000)
-    },
-    'editActions.errorMessage'() {
-      clearTimeout(this.editActions.errorTimeout)
-      this.editActions.errorTimeout = setTimeout(() => {
-        this.editActions.errorMessage = null
-      }, 5000)
-    },
-  },
-  mixins: [commonMixins],
+  mixins: [commonMixins, actionsMixins],
   async mounted() {
     await this.getCategories()
   },
@@ -145,7 +87,7 @@ export default {
     ...mapActions('layout', ['setOverlaySpinner']),
     async getCategories() {
       try {
-        this.categories.value = await productApi.getCategories()
+        this.categories.value = (await productApi.getCategories()).results
       } catch (err) {
         const error = errorHelper.handleSamePageError(err)
         this.setFormErrorMessage(this.categories, error)
@@ -155,13 +97,13 @@ export default {
       try {
         this.setOverlaySpinner(true)
         const res = await productApi.getCategory(id)
-        const { _id, name } = res
-        this.gettingCategory._id = _id
-        this.gettingCategory.defaultValue = name
-        this.gettingCategory.value = name
-        this.gettingCategory.showDialog = true
+        const { _id, name } = res.results
+        this.selectedCategory._id = _id
+        this.selectedCategory.defaultValue = name
+        this.selectedCategory.value = name
+        this.selectedCategory.showDialog = true
       } catch (err) {
-        this.gettingCategory.showDialog = false
+        this.selectedCategory.showDialog = false
         const error = errorHelper.handleSamePageError(err)
         this.setFormErrorMessage(this.deleteActions, error)
       } finally {
@@ -172,13 +114,13 @@ export default {
       try {
         this.setOverlaySpinner(true)
         const res = await productApi.deleteCategory(id)
-        if (res._id === id) {
+        if (res.success && res.results._id === id) {
           this.setFormSuccessMessage(
             this.deleteActions,
-            `${res.name} ${constants.SUCESSFULLYDELETED}`
+            `${res.results.name} ${constants.SUCESSFULLYDELETED}`
           )
           this.categories.value = this.categories.value.filter(
-            (category) => category._id !== res._id
+            (category) => category._id !== res.results._id
           )
         }
       } catch (err) {
@@ -192,21 +134,19 @@ export default {
       try {
         this.setOverlaySpinner(true)
         const res = await productApi.updateCategory(id, name)
-
-        if (res._id === id) {
+        if (res.success && res.results._id === id) {
           this.setFormSuccessMessage(
             this.editActions,
-            `${defaultName} ${constants.SUCESSFULLYUPDATED} ${res.name}`
+            `${defaultName} ${constants.SUCESSFULLYUPDATED_CATEGORY} ${res.results.name}`
           )
-          this.gettingCategory.showDialog = false
         }
       } catch (err) {
-        this.gettingCategory.showDialog = false
         const error = errorHelper.handleSamePageError(err)
         this.setFormErrorMessage(this.editActions, error)
       } finally {
         await this.getCategories()
         this.setOverlaySpinner(false)
+        this.selectedCategory.showDialog = false
       }
     },
   },

@@ -12,8 +12,8 @@ const createLoadingState = (isLoading = false) => {
 
 const createDefaultActions = () => {
   return {
-    successMessage: null,
-    errorMessage: null,
+    successMessage: '',
+    errorMessage: '',
     successTimeout: null,
     errorTimeout: null,
   }

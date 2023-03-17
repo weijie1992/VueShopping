@@ -6,20 +6,20 @@
           errorMessage
         }}</v-alert>
         <v-text-field
-          v-model="formData.fullName.value"
+          v-model.trim="formData.fullName.value"
           label="full name"
           variant="underlined"
         ></v-text-field>
 
         <v-text-field
-          v-model="formData.email.value"
+          v-model.trim="formData.email.value"
           type="email"
           label="Email"
           variant="underlined"
         ></v-text-field>
 
         <v-text-field
-          v-model="formData.password.value"
+          v-model.trim="formData.password.value"
           type="password"
           label="Password"
           placeholder="Enter your password"
@@ -52,21 +52,21 @@ export default {
   data() {
     return {
       formData: {
-        errorMessage: null,
+        errorMessage: '',
         fullName: {
-          value: null,
+          value: '',
           _inputState: {
             ...factories.createInputState('fullName'),
           },
         },
         email: {
-          value: null,
+          value: '',
           _inputState: {
             ...factories.createInputState('email'),
           },
         },
         password: {
-          value: null,
+          value: '',
           _inputState: {
             ...factories.createInputState('password'),
           },
