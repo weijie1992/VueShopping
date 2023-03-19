@@ -177,17 +177,5 @@ export default {
 </script>
 
 <style scoped>
-.v-list-item {
-  transition: all 0.2s ease-in-out;
-}
-
-.v-list-item:hover {
-  background-color: rgba(0, 0, 0, 0.1);
-}
-
-.v-list-item-content {
-  font-size: 18px;
-  font-weight: 500;
-  padding-right: 24px;
-}
+@import '@/assets/list.css';
 </style>

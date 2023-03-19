@@ -155,14 +155,5 @@ export default {
 </script>
 
 <style scoped>
-.inputPrice :deep(input[type='number']) {
-  -moz-appearance: textfield;
-}
-
-.inputPrice :deep(input)::-webkit-outer-spin-button,
-.inputPrice :deep(input)::-webkit-inner-spin-button {
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-}
+@import '@/assets/no-up-down-num-textfield.css';
 </style>

@@ -17,9 +17,6 @@ export default {
 </script>
 
 <style scoped>
-/* .custom-breakpoint .v-col {
-  flex-basis: 100%;
-} */
 .cols-right {
   flex: 0 0 25%;
   max-width: 25%;

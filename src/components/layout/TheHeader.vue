@@ -56,45 +56,5 @@ export default {
 }
 </script>
 <style scoped>
-.black-text {
-  color: black;
-}
-a {
-  text-decoration: none;
-  color: black;
-}
-a:active button,
-a.router-link-active button {
-  background: gray;
-}
-a:hover button {
-  background: lightgray;
-}
-.v-toolbar__content {
-  padding: 50px;
-}
-.width-style {
-  max-width: 1800;
-}
-
-@media (min-width: 960px) {
-  .width-style {
-    max-width: 900px;
-  }
-}
-@media (min-width: 1280px) {
-  .width-style {
-    max-width: 1200px;
-  }
-}
-@media (min-width: 1920px) {
-  .width-style {
-    max-width: 1800px;
-  }
-}
-@media (min-width: 2560px) {
-  .width-style {
-    max-width: 2100px;
-  }
-}
+@import '@/assets/the-header.css';
 </style>
